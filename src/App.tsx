@@ -56,6 +56,7 @@ function App() {
       setUser(data.user);
       setIsAuthenticated(true);
     } catch (error) {
+      setLog("Authentication failed: " + error);
       console.error('Authentication failed', error);
     }
   };
