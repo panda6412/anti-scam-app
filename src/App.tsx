@@ -13,6 +13,7 @@ function App() {
 
   const [jwtToken, setJwtToken] = useState<string | null>(null)
   const [token, setToken] = useState<string | null>(null);
+  const [log, setLog] = useState<string | null>(null);
 
   useEffect(() => {
     setJwtToken(localStorage.getItem('jwtToken'))
@@ -20,9 +21,10 @@ function App() {
 
   useEffect(() => {
     // ✅ Listen for the token from the parent WebView
+    setLog("Listening for token");
     const handleMessage = (event: MessageEvent) => {
       if (event.data) {
-        console.log("Received token:", event.data);
+        setLog("Received token:" + event.data);
         setToken(event.data);
         localStorage.setItem('jwtToken', event.data);
         fetchUser(event.data);
@@ -35,6 +37,7 @@ function App() {
 
   // ✅ Fetch user data from the backend using the received token
   const fetchUser = async (jwt: string) => {
+    setLog("Fetching user");
     try {
       const response = await fetch('http://localhost:5000/api/user', {
         method: 'GET',
@@ -49,6 +52,7 @@ function App() {
       }
 
       const data = await response.json();
+      setLog("User fetched: " + data.user);
       setUser(data.user);
       setIsAuthenticated(true);
     } catch (error) {
@@ -60,6 +64,7 @@ function App() {
     return <div className='flex flex-col'>
       <div className='flex h-screen items-center justify-center text-2xl text-red-500'>!!Unauthorized Access {jwtToken || 'no jwtToken'}</div>
       <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>!!Unauthorized Access {token || 'no token'}</div>
+      <div className='flex h-screen items-center justify-center text-2xl text-green-500'>{log || 'no log'}</div>
     </div>
   }
 
