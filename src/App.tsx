@@ -39,7 +39,7 @@ function App() {
   const fetchUser = async (jwt: string) => {
     setLog("Fetching user");
     try {
-      const response = await fetch('http://localhost:5000/api/user', {
+      const response = await fetch('http://localhost:3000/api/user', {
         method: 'GET',
         headers: {
           'Authorization': `Bearer ${jwt}`,
