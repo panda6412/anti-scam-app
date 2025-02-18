@@ -57,7 +57,10 @@ function App() {
   };
 
   if (!isAuthenticated) {
-    return <div className='flex h-screen items-center justify-center text-2xl text-red-500'>!!Unauthorized Access {jwtToken || 'no token'}</div>
+    return <div className='flex flex-col'>
+      <div className='flex h-screen items-center justify-center text-2xl text-red-500'>!!Unauthorized Access {jwtToken || 'no jwtToken'}</div>
+      <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>!!Unauthorized Access {token || 'no token'}</div>
+    </div>
   }
 
   return (
