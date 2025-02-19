@@ -54,9 +54,10 @@ function App() {
       }
 
       setLog('User pre fetched: ' + response.status)
-      const text = await response.text()
-      setLog('User pre fetched: ' + text)
-      const data = JSON.parse(text)
+      // const text = await response.text()
+      // setLog('User pre fetched: ' + text)
+      // const data = JSON.parse(text)
+      const data = await response.json()
       setLog('User fetched: ' + data.user)
       setUser(data.user)
       setIsAuthenticated(true)
@@ -78,7 +79,7 @@ function App() {
     return (
       <div className='flex flex-col h-10'>
         <div className='flex h-screen items-center justify-center text-2xl text-red-500'>
-          !!!Unauthorized Access {jwtToken || 'no jwtToken'}
+          !!!!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>
           !!!!Unauthorized Access {token || 'no token'}
