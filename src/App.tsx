@@ -51,20 +51,23 @@ function App() {
         throw new Error('Unauthorized');
       }
 
+      setLog("User pre fetched: " + response.status);
       const data = await response.json();
       setLog("User fetched: " + data.user);
       setUser(data.user);
       setIsAuthenticated(true);
     } catch (error) {
-      setLog("Authentication failed: " + error);
-      console.error('Authentication failed', error);
+      setTimeout(() => {
+        setLog("Authentication failed: " + error);
+        console.error('Authentication failed', error);
+      }, 5000);
     }
   };
 
   if (!isAuthenticated) {
-    return <div className='flex flex-col'>
+    return <div className='flex flex-col h-10'>
       <div className='flex h-screen items-center justify-center text-2xl text-red-500'>!!Unauthorized Access {jwtToken || 'no jwtToken'}</div>
-      <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>!!Unauthorized Access {token || 'no token'}</div>
+      <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>!!!Unauthorized Access {token || 'no token'}</div>
       <div className='flex h-screen items-center justify-center text-2xl text-green-500'>{log || 'no log'}</div>
     </div>
   }
