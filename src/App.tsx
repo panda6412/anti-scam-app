@@ -56,7 +56,7 @@ function App() {
       setLog('User pre fetched: ' + response.status)
       const text = await response.text()
       setLog('User pre fetched: ' + text)
-      const data = await response.json()
+      const data = JSON.parse(text)
       setLog('User fetched: ' + data.user)
       setUser(data.user)
       setIsAuthenticated(true)
