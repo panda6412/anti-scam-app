@@ -40,7 +40,7 @@ function App() {
     setLog('Fetching user')
     try {
       // http://localhost:9999
-      const response = await fetch('https://964f-211-72-129-103.ngrok-free.app/api/user', {
+      const response = await fetch('http://localhost:9999/api/user', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -54,7 +54,8 @@ function App() {
       }
 
       setLog('User pre fetched: ' + response.status)
-      console.log('User pre fetched: ' + response)
+      const text = await response.text()
+      setLog('User pre fetched: ' + text)
       const data = await response.json()
       setLog('User fetched: ' + data.user)
       setUser(data.user)
