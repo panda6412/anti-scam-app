@@ -68,11 +68,11 @@ function App() {
     }
   }
 
-  useEffect(() => {
-    const jwtToken =
-      'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-    fetchUser(jwtToken)
-  }, [])
+  // useEffect(() => {
+  //   const jwtToken =
+  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
+  //   fetchUser(jwtToken)
+  // }, [])
 
   if (!isAuthenticated) {
     return (
@@ -81,7 +81,7 @@ function App() {
           !!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>
-          !!!Unauthorized Access {token || 'no token'}
+          !!!!Unauthorized Access {token || 'no token'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-green-500'>{log || 'no log'}</div>
       </div>
