@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 import './App.css'
 
@@ -37,6 +38,18 @@ function App() {
     window.addEventListener('message', handleMessage)
     return () => window.removeEventListener('message', handleMessage)
   }, [])
+
+  useEffect(() => {
+    // ✅ Read the injected JWT token
+    const checkInjectedToken = setInterval(() => {
+      const injectedToken = (window as any).injectedToken;
+      if (injectedToken) {
+        setToken(injectedToken);
+        setLog("Received token:" + injectedToken);
+        clearInterval(checkInjectedToken);
+      }
+    }, 500);
+  }, []);
 
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
@@ -111,6 +124,8 @@ function App() {
   if (!isAuthenticated) {
     return (
       <div className='flex flex-col h-10'>
+        <h1>JWT Token in WebView:</h1>
+        <div className='text-2xl text-orange-300'>{token ? token : "Waiting for token..."}</div>
         <div className='flex h-screen items-center justify-center text-2xl text-red-500'>
           !!!!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
