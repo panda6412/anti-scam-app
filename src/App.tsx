@@ -15,12 +15,15 @@ function App() {
   const [token, setToken] = useState<string | null>(null)
   const [log, setLog] = useState<string | null>(null)
 
+  const [selectedFile, setSelectedFile] = useState<File | null>(null)
+  const [previewUrl, setPreviewUrl] = useState<string | null>(null)
+  const [uploadStatus, setUploadStatus] = useState<string | null>(null)
+
   useEffect(() => {
     setJwtToken(localStorage.getItem('jwtToken'))
   }, [])
 
   useEffect(() => {
-    // ✅ Listen for the token from the parent WebView
     setLog('Listening for token')
     const handleMessage = (event: MessageEvent) => {
       if (event.data) {
@@ -35,11 +38,9 @@ function App() {
     return () => window.removeEventListener('message', handleMessage)
   }, [])
 
-  // ✅ Fetch user data from the backend using the received token
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
     try {
-      // http://localhost:9999
       const response = await fetch('https://964f-211-72-129-103.ngrok-free.app/api/user', {
         method: 'GET',
         headers: {
@@ -54,9 +55,6 @@ function App() {
       }
 
       setLog('User pre fetched: ' + response.status)
-      // const text = await response.text()
-      // setLog('User pre fetched: ' + text)
-      // const data = JSON.parse(text)
       const data = await response.json()
       setLog('User fetched: ' + data.user)
       setUser(data.user)
@@ -69,11 +67,46 @@ function App() {
     }
   }
 
-  // useEffect(() => {
-  //   const jwtToken =
-  //     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyfQ.SflKxwRJSMeKKF2QT4fwpMeJf36POk6yJV_adQssw5c'
-  //   fetchUser(jwtToken)
-  // }, [])
+  // ✅ Handle File Selection and Preview
+  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0]
+    if (file) {
+      setSelectedFile(file)
+      setPreviewUrl(URL.createObjectURL(file))
+    }
+  }
+
+  // ✅ Upload Image to Backend
+  const handleUpload = async () => {
+    if (!selectedFile) {
+      setUploadStatus('Please select a file first.')
+      return
+    }
+    setUploadStatus('Uploading...')
+
+    const formData = new FormData()
+    formData.append('image', selectedFile)
+
+    try {
+      const response = await fetch('https://964f-211-72-129-103.ngrok-free.app/api/upload', {
+        method: 'POST',
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: formData
+      })
+
+      if (!response.ok) {
+        throw new Error('Upload failed')
+      }
+
+      const data = await response.json()
+      setUploadStatus(`Upload successful! Image URL: ${data.imageUrl}`)
+    } catch (error) {
+      console.error('Upload failed:', error)
+      setUploadStatus('Upload failed. Please try again.')
+    }
+  }
 
   if (!isAuthenticated) {
     return (
@@ -92,8 +125,21 @@ function App() {
   return (
     <div className='p-4'>
       <h1 className='text-xl'>
-        Welcome, {user?.name} {token}
+        Welcome, {user?.name}
       </h1>
+
+      {/* ✅ Image Upload Section */}
+      <div className="mt-4">
+        <input type="file" accept="image/*" onChange={handleFileChange} />
+        {previewUrl && <img src={previewUrl} alt="Preview" className="mt-2 w-40 h-40 object-cover" />}
+        <button
+          className="mt-2 bg-blue-500 text-white px-4 py-2 rounded"
+          onClick={handleUpload}
+        >
+          Upload Image
+        </button>
+        {uploadStatus && <p className="mt-2 text-gray-700">{uploadStatus}</p>}
+      </div>
     </div>
   )
 }
