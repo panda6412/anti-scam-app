@@ -46,6 +46,7 @@ function App() {
       if (injectedToken) {
         setToken(injectedToken);
         setLog("Received token:" + injectedToken);
+        fetchUser(injectedToken)
         clearInterval(checkInjectedToken);
       }
     }, 500);
