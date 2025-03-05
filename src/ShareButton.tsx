@@ -18,7 +18,7 @@ function ShareButton() {
         
         const response = await fetch('/test.JPG'); // File stored in public/files
         const blob = await response.blob();
-        const file = new File([blob], "sample.pdf", { type: blob.type });
+        const file = new File([blob], "test.JPEG", { type: blob.type });
         // const file = base64ToFile(base64Image, 'mocks-image.jpeg')
 
         const shareData: ShareData = {
