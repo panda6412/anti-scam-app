@@ -1,13 +1,28 @@
-function ShareButton() {
-  const shareData = {
-    title: '分享標題',
-    text: '這是要分享的內容，來看看吧！',
-    url: window.location.href // 當前頁面網址
+const base64Image = 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR42mP8/x8AAwMCAO+ip1sAAAAASUVORK5CYII='
+const base64ToFile = (base64: string, filename: string): File => {
+  const arr = base64.split(',')
+  const mime = arr[0].match(/:(.*?);/)?.[1] || 'image/png'
+  const bstr = atob(arr[1])
+  let n = bstr.length
+  const u8arr = new Uint8Array(n)
+  while (n--) {
+    u8arr[n] = bstr.charCodeAt(n)
   }
+  return new File([u8arr], filename, { type: mime })
+}
 
+function ShareButton() {
   const handleShare = async () => {
     if (navigator.share) {
       try {
+        const file = base64ToFile(base64Image, 'mock-image.png')
+
+        const shareData: ShareData = {
+          title: '分享圖片',
+          text: '這是要分享的 Base64 圖片！',
+          files: [file]
+        }
+
         await navigator.share(shareData)
         console.log('分享成功')
       } catch (error) {
@@ -37,7 +52,7 @@ function ShareButton() {
 
       {/* 📌 桌機或不支援 Web Share API: 手動分享選項 */}
       <div className='manual-share'>
-        <a
+        {/* <a
           href={`https://social-plugins.line.me/lineit/share?url=${encodeURIComponent(shareData.url)}`}
           target='_blank'
           rel='noopener noreferrer'
@@ -52,7 +67,7 @@ function ShareButton() {
           className='share-link'
         >
           🟢 分享到 WhatsApp
-        </a>
+        </a> */}
         <button onClick={handleCopyLink} className='copy-button'>
           📋 複製連結
         </button>
