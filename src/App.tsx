@@ -53,10 +53,10 @@ function App() {
     }, 500);
   }, []);
 
-  // useEffect(() => {
-  //   setLog('Fetching user')
-  //   fetchUser('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc0MTE2NTg1NSwiZXhwIjoxNzQxMTY5NDU1fQ.x0H5CTpXKwbKQGz0v0_U8IMae2xyD35BA1oiOeRCgDI')
-  // }, [jwtToken])
+  useEffect(() => {
+    setLog('Fetching user')
+    fetchUser('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc0MTE2NTg1NSwiZXhwIjoxNzQxMTY5NDU1fQ.x0H5CTpXKwbKQGz0v0_U8IMae2xyD35BA1oiOeRCgDI')
+  }, [jwtToken])
 
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
