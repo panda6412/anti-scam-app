@@ -61,7 +61,7 @@ function App() {
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
     try {
-      const response = await fetch('http://my-express-app-eta-eight.vercel.app/profile', {
+      const response = await fetch('https://my-express-app-eta-eight.vercel.app/profile', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -136,7 +136,7 @@ function App() {
           !!!!!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>
-          !!!!!Unauthorized Access {token || 'no token'}
+          !!!!!!Unauthorized Access {token || 'no token'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-green-500'>{log || 'no log'}</div>
       </div>
