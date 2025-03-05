@@ -16,7 +16,7 @@ function ShareButton() {
     if (navigator.share) {
       try {
         
-        const response = await fetch('/test.JPG'); // File stored in public/files
+        const response = await fetch('/https://panda6412.github.io/anti-scam-app/test.JPG'); // File stored in public/files
         const blob = await response.blob();
         const file = new File([blob], "test.JPEG", { type: blob.type });
         // const file = base64ToFile(base64Image, 'mocks-image.jpeg')
