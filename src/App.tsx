@@ -133,7 +133,7 @@ function App() {
         <h1>JWT Token in WebView:</h1>
         <div className='text-2xl text-orange-300'>{token ? token : "Waiting for token..."}</div>
         <div className='flex h-screen items-center justify-center text-2xl text-red-500'>
-          !!!!!!Unauthorized Access {jwtToken || 'no jwtToken'}
+          !!!!!!!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>
           !!!!!!Unauthorized Access {token || 'no token'}
