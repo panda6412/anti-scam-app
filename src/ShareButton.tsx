@@ -15,7 +15,7 @@ function ShareButton() {
   const handleShare = async () => {
     if (navigator.share) {
       try {
-        const file = base64ToFile(base64Image, 'mock-image.png')
+        const file = base64ToFile(base64Image, 'mocks-image.jpeg')
 
         const shareData: ShareData = {
           title: '分享圖片',
