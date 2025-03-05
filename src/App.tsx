@@ -53,6 +53,11 @@ function App() {
     }, 500);
   }, []);
 
+  useEffect(() => {
+    setLog('Fetching user')
+    fetchUser('eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhZG1pbiIsImlhdCI6MTc0MTE2NTg1NSwiZXhwIjoxNzQxMTY5NDU1fQ.x0H5CTpXKwbKQGz0v0_U8IMae2xyD35BA1oiOeRCgDI')
+  }, [jwtToken])
+
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
     try {
@@ -60,8 +65,7 @@ function App() {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`,
-          'Content-Type': 'application/json',
-          'ngrok-skip-browser-warning': 'true'
+          'Content-Type': 'application/json'
         }
       })
 
@@ -129,7 +133,7 @@ function App() {
         <h1>JWT Token in WebView:</h1>
         <div className='text-2xl text-orange-300'>{token ? token : "Waiting for token..."}</div>
         <div className='flex h-screen items-center justify-center text-2xl text-red-500'>
-          !!!!Unauthorized Access {jwtToken || 'no jwtToken'}
+          !!!!!Unauthorized Access {jwtToken || 'no jwtToken'}
         </div>
         <div className='flex h-screen items-center justify-center text-2xl text-yellow-500'>
           !!!!!Unauthorized Access {token || 'no token'}
