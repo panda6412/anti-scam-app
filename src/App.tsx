@@ -1,6 +1,7 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { useEffect, useState } from 'react'
 import './App.css'
+import ShareButton from './ShareButton'
 
 interface User {
   sub: string
@@ -55,7 +56,7 @@ function App() {
   const fetchUser = async (jwt: string) => {
     setLog('Fetching user')
     try {
-      const response = await fetch('https://964f-211-72-129-103.ngrok-free.app/api/user', {
+      const response = await fetch('http://my-express-app-eta-eight.vercel.app/profile', {
         method: 'GET',
         headers: {
           Authorization: `Bearer ${jwt}`,
@@ -143,6 +144,7 @@ function App() {
       <h1 className='text-xl'>
         Welcome, {user?.name}
       </h1>
+      <ShareButton />
 
       {/* ✅ Image Upload Section */}
       <div className="mt-4">
